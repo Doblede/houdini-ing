@@ -9,6 +9,42 @@ hip_path = hou.hipFile.path()
 hou.ui.copyTextToClipboard(hip_path)
 ```
 
+# CHANGE SELECTED NODES/NETBOXES COLOR - PYTHON
+```
+import hou
+selected_color = hou.ui.selectColor()
+if selected_color:
+    # Get the current selected items
+    selected_items_list = hou.selectedItems()
+    # Change color of each selected element
+    for selected_item in selected_items_list:
+        selected_item.setColor(selected_color)
+```
+
+# JUMP UP - PYTHON
+Script to override the `u` shortcut, to jump a level up on the Network View
+It changes the Update Mode to Manual before Jumping Up
+```
+import hou
+hou.setUpdateMode(hou.updateMode.Manual)
+network = hou.ui.curDesktop().paneTabUnderCursor()
+networkPath = network.pwd().path()
+parent_node = hou.node(networkPath)
+network.setCurrentNode(parent_node)
+```
+
+# UPDATE MODE SWITCH SCRIPT - PYTHON
+Script to be used on a shortcut to toggle the Update Mode between Manual/AutoUpdate
+```
+import hou
+mode = hou.updateModeSetting().name()
+if mode == 'AutoUpdate':
+    hou.setUpdateMode(hou.updateMode.Manual)
+if mode == 'Manual':
+    hou.setUpdateMode(hou.updateMode.AutoUpdate)
+```
+
+
 # ATTACH GUIDES TO CLOSEST SURFACE - VEX - Run Over Primitives
 ```
 int points[] = primpoints(0, @primnum);
